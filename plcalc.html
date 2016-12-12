@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>Power Level Reader</title>
+		<link rel="stylesheet" href="dbz.css">
+	</head>
+	
+	<body>
+		<center><h1>What's Your Power Level</h1><center>
+		
+		<center><p>This page is a throwback to my earlier days of surfing the web. This page recreates one of those old power level formula pages. Simply enter the requested information in the fields below, and this page will spit out a completely real and accurate power level for you. ...why don't they have sarcasm tags for HTML?</p></center>
+		<center><p>So anyway, the "average" human power level is 5 to 8. What's yours?</p><center>
+		<center>
+		<form id="plcalc" onsubmit="calcPL(); return false;">
+			Your height (in inches): <input type="text" name="height" />
+			Your weight (in pounds): <input type="text" name="weight" />
+			Your age (in years): <input type="text" name="age" />
+			Most push-ups you can do: <input type="text" name="pushup" />
+			
+			<input type="submit" value="Calculate your Power Level!" />
+		</form>
+		Your power level is: 
+		<div id="pl">
+			<p id="num"></p>
+			<p id="statement"></p>
+		</div>
+		</center>
+		<center><p>Click <a href="index.html">here</a> to go back to the main page.</p></center>
+		<script src="calcpl.js"></script>
+		<noscript>You must have JavaScript enabled in order to use this!</noscript>
+	</body>
+</html>

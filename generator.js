@@ -1,8 +1,12 @@
 function resetBoxesA() {
+	//resetBoxesB does the same thing
+	//get the elements from the page
 	var physA = document.getElementById("physAOption");
 	var enA = document.getElementById("enAOption");
 	var menA = document.getElementById("menAOption");
 	var proA = document.getElementById("proAOption");
+	
+	//set them all to N/A
 	physA.selectedIndex = "0";
 	document.getElementById("physAAllowed").textContent = "0";
 	enA.selectedIndex = "0";
@@ -12,6 +16,7 @@ function resetBoxesA() {
 	proA.selectedIndex = "0";
 	document.getElementById("proAAllowed").textContent = "0";
 	
+	//re-enable all four options
 	for (i = 1; i <= 4; i++) {
 		physA[i].disabled = false;
 		enA[i].disabled = false;
@@ -22,15 +27,21 @@ function resetBoxesA() {
 }
 
 function PhysAChanged() {
+	//PhysAChanged, EnAChanged, MenAChanged, ProAChanged - all basically the same thing
+	//PhysBChanged, EnBChanged, MenBChanged, ProBChanged - also do the same thing.
+	//first, get the object and the index that was selected.
 	var obj = document.getElementById("physAOption");
 	var index = obj.selectedIndex;
 	if (index != "0" && index != "-1") {
+		//as all of the other objects are identical, the index will be the same.
+		//Make sure the user can't select the same option for the other three
 		document.getElementById("enAOption")[index].disabled = true;
 		document.getElementById("menAOption")[index].disabled = true;
 		document.getElementById("proAOption")[index].disabled = true;
 		setNumberAllowed(obj);
 	}
 	else if (index == "0") {
+		//Reset the affected boxes (boxes A)
 		resetBoxesA();
 	}
 }
@@ -78,6 +89,10 @@ function ProAChanged() {
 }
 
 function setNumberAllowed(obj) {
+	
+	//get the id of the thing.
+	//options A refer to the player's attributes, which can be no higher than 4.
+	//options B refer to the player's skills, which can be no higher than 7.
 	if (obj.id === "physAOption") {
 		document.getElementById("physAAllowed").textContent = (5 - parseInt(obj.selectedIndex)).toString();
 	}
@@ -105,13 +120,14 @@ function setNumberAllowed(obj) {
 }
 
 function physAttrChange() {
-
+	//each of the AttrChange() methods do the same things on different fields
 	var strValue = parseInt(document.getElementById("str").value);
 	var dexValue = parseInt(document.getElementById("dex").value);
 	var stamValue = parseInt(document.getElementById("stam").value);
 	
 	var total = strValue + dexValue + stamValue;
 	
+	//show the user the total
 	document.getElementById("physATotal").textContent = total.toString();
 	
 	checkAttrAssigned("physical");
@@ -154,9 +170,11 @@ function proAttrChange() {
 }
 
 function checkAttrAssigned(tree) {
+	//get the error field so the user can be updated
 	var err = document.getElementById("attrErr");
 	err.textContent = "";
 	
+	//get relevant fields
 	var physAllowed = document.getElementById("physAAllowed");
 	var physTotal = document.getElementById("physATotal");
 	
@@ -170,9 +188,11 @@ function checkAttrAssigned(tree) {
 	var proTotal = document.getElementById("proATotal");
 	
 	if (tree == "physical") {
+		//convert the relevant ints
 		var physPtsAllow = parseInt(physAllowed.textContent);
 		var physPtsAssigned = parseInt(physTotal.textContent);
 		
+		//the user must exactly equal the "Allowed" number.
 		if (physPtsAllow > physPtsAssigned) {
 			err.textContent = "You still have some physical points to spend!\n";
 		}
@@ -217,6 +237,8 @@ function checkAttrAssigned(tree) {
 }
 
 function getStaminaTotal() {
+	//getStaminaTotal, getManipTotal, getIQTotal, and getEUDTotal all do the same thing
+	//return the value of the relevant attribute
 	var stamValue = parseInt(document.getElementById("stam").value) + 1;
 	
 	return stamValue;
@@ -241,6 +263,7 @@ function getEUDTotal() {
 }
 
 function writeMaxSkills() {
+	//update the relevant fields using the above 4 getter methods.
 	document.getElementById("physBMax").textContent = getStaminaTotal().toString();
 	
 	document.getElementById("enBMax").textContent = getManipTotal().toString();
@@ -331,6 +354,7 @@ function ProBChanged() {
 }
 
 function physSkillChange() {
+	//the SkillChange methods are the same, just different fields queried
 	var acroValue = parseInt(document.getElementById("acro").value);
 	var athValue = parseInt(document.getElementById("ath").value);
 	var finValue = parseInt(document.getElementById("fin").value);
@@ -338,7 +362,7 @@ function physSkillChange() {
 	var survValue = parseInt(document.getElementById("surv").value);
 	
 	var total = acroValue + athValue + finValue + stlhValue + survValue;
-	
+	//show the user their current allocated totals
 	document.getElementById("physBTotal").textContent = total.toString();
 	
 	checkSkillAssigned("physical");
@@ -387,12 +411,14 @@ function proSkillChange() {
 }
 
 function checkSkillAssigned(tree) {
-
+	//if there are any errors, add them to that field.
 	var err = document.getElementById("skillErr");
 	
+	//erase the current contents
 	err.textContent = "";
 	var errString = "";
-
+	
+	//get the relevant fields
 	var physAllowed = document.getElementById("physBAllowed");
 	var physTotal = document.getElementById("physBTotal");
 	
@@ -404,13 +430,15 @@ function checkSkillAssigned(tree) {
 	
 	var proAllowed = document.getElementById("proBAllowed");
 	var proTotal = document.getElementById("proBTotal");
-
+	
+	//confirm the highest skill (none can be higher than a given Attribute)
 	var highestStat = maxInTree(tree);
 	
 	if (tree == "physical") {
+		//dependent on the tree, get the ints of the relevant fields
 		var physPtsAllow = parseInt(physAllowed.textContent);
 		var physPtsAssigned = parseInt(physTotal.textContent);
-
+		//get the relevant attribute
 		var stam = getStaminaTotal();
 
 		if (physPtsAllow > physPtsAssigned) {
@@ -475,6 +503,7 @@ function checkSkillAssigned(tree) {
 
 function maxInTree(tree) {
 	
+	//use Math.max to get the highest skill in the given tree.
 	if (tree == "physical") {
 		var acroValue = parseInt(document.getElementById("acro").value);
 		var athValue = parseInt(document.getElementById("ath").value);
@@ -513,7 +542,13 @@ function maxInTree(tree) {
 }
 
 function generateSheet() {
-
+	
+	//check if all user input is valid!
+	if (!validateAllInput()) {
+		//if it's not valid, alert the user and exit the function IMMEDIATELY.
+		alert("one or more forms does not have valid data in it!");
+		return;
+	}
 	//Get the form data from the page.
 	var genData = new FormData(document.getElementById("generator"));
 	
@@ -580,7 +615,7 @@ function generateSheet() {
 	var htmlString = "<html><head><title>Your Character</title><link rel=\"stylesheet\" href=\"dbz.css\"></head><body>";
 	
 	htmlString += "<p>Character Name: " + charName + "</p>";
-	htmlString += "<p>Username:" + userName + "</p>";
+	htmlString += "<p>Username: " + userName + "</p>";
 	htmlString += "<p>Campaign: Beta II</p>";
 	htmlString += "<p>Race: " + charRace + "</p>";
 	htmlString += "<p>Size: " + charSize + "</p>";
@@ -647,6 +682,55 @@ function generateSheet() {
 	//open a new window and populate it with the html above.
 	var tempWindow = open("", "Your Character", "height=800,width=800");
 	tempWindow.document.write(htmlString);
+}
+
+function validateAllInput() {
+	
+	//get all the input fields
+	var allInputs = document.getElementsByTagName("input");
+	
+	//iterate over the fields
+	for (i = allInputs.length - 1; i >= 0; i--) {
+		//send it to helper function, if one chokes automatic fail
+		if (!validateInput(allInputs[i])) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+function validateInput(field) {
+	
+	//numbers only
+	var numRegExp = new RegExp('^[0-9]+$', 'g');
+	
+	//letters only 
+	var charRegExp = new RegExp('^[a-zA-Z]+$', 'g');
+	
+	//numbers and letters only.
+	var uidRegExp = new RegExp('^[0-9a-zA-Z]+$', 'g');
+	
+	//check using the appropriate field
+	if (field.tagName == "INPUT") {
+		if (field.type == "submit") {
+			return true;
+		}
+		else if (field.type == "text" && field.name == "uname") { //username might have digits in it
+			return uidRegExp.test(field.value);
+		}
+		else if (field.type == "text") { //character's name generally should not have digits in it.
+			return charRegExp.test(field.value);
+		}
+		else if (field.type == "number") { //Any of the number-based fields should only have digits in it.
+			return numRegExp.test(field.value);
+		}
+		else { //field is not text-based (radio, checkbox)
+			return true;
+		}
+	}
+	
+	
 }
 
 //Automatically update the max value a Skill can be from the tree.

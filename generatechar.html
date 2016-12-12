@@ -11,7 +11,7 @@
 		<p>So, the mission statement is to help you achieve generating a character based on the Beta II using the rules from <a href="https://drive.google.com/file/d/0BzqNmYX2wzXZeC13YWl4d0JhRUk/view?usp=sharing">this ruleset I found long ago</a>, that we are using for our game. The end result will be itself a webpage, but the results should be easily copied down to an excel document/Google Sheets/what-have-you.</p>
 		<p>Once you have done everything, this form will perform any calculations and should output a valid character sheet, so long as you (the user of this page) enter valid information.</p>
 		<p>So, if you're ready, let's begin.</p>
-		<form id="generator" onsubmit="generateSheet()">
+		<form id="generator" onsubmit="generateSheet(); return false;">
 			
 			<h2>Character Basic Information</h2>
 			<p>First, we will start with your character's name, race, and whatnot (cells A1-F4).</p>
@@ -45,9 +45,9 @@
 			
 			<h3>Your character's gender</h3>
 			<p>Should be self-explanatory, I think.</p>
-			<input type="radio" name="gender" value="male" />Male <br>
+			<input type="radio" name="gender" value="male" checked />Male <br>
 			<input type="radio" name="gender" value="female" />Female <br>
-			<input type="radio" name="gender" value="neither" />Neither/Is a Namekian <br>
+			<input type="radio" name="gender" value="neither" />Neither/Is Namek, a Frieza, or an Android <br>
 			
 			<h2>Character Attributes</h2>
 			<p>Next up is your character's attributes (cells A6-L8). How this works, is that each tree must be designated one's most important tree (primary), second most important (secondary), third most important (tertiary), and least important (auxiliary). Now, each of these attributes has 1 point already in it. For each tree, you get a certain amount of points to distribute between the trees (primary 4, secondary 3, tertiary 2, auxiliary 1).</p>
@@ -292,7 +292,7 @@
 			
 			<input type="radio" name="firstmerit" value="Telekinesis" /> Telekinesis - Gain the ability to move things with your mind (within reason). This also lets you use telepathy to communicate with other people over a reasonable distance (likely based on Intelligence). Your Intelligence attribute must be 3 or higher to take this. Can only be taken once. Cost: 8 XP. <br>
 			
-			<input type="radio" name="firstmerit" value="Two-Weapon Fighting" disabled /> Two-Weapon Fighting - Reduce the negative from wielding two weapons by 1, and increase the damage value gained by wielding your weapon by 1. Must have a Dexterity attribute of 3 or higher and already have the Ambidextrous Merit to take this merit. Cost: 6 XP.
+			<input type="radio" name="firstmerit" value="Two-Weapon Fighting" disabled /> Two-Weapon Fighting - Reduce the negative from wielding two weapons by 1, and increase the damage value gained by wielding your weapon by 1. Must have a Dexterity attribute of 3 or higher and already have the Ambidextrous Merit to take this merit. Cost: 6 XP. <br>
 			
 			<input type="radio" name="firstmerit" value="Rapid Blitz" /> Rapid Blitz - Increase the effects of Power Shot by two and Deadly Blow by one while using the Blitz action. Cost: 10 XP. <br>
 			
