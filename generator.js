@@ -15,7 +15,7 @@ function resetBoxesA() {
 	document.getElementById("menAAllowed").textContent = "0";
 	proA.selectedIndex = "0";
 	document.getElementById("proAAllowed").textContent = "0";
-	
+	var i;
 	//re-enable all four options
 	for (i = 1; i <= 4; i++) {
 		physA[i].disabled = false;
@@ -264,13 +264,13 @@ function getEUDTotal() {
 
 function writeMaxSkills() {
 	//update the relevant fields using the above 4 getter methods.
-	document.getElementById("physBMax").textContent = getStaminaTotal().toString();
+	document.getElementById("physBMax").textContent = 'Stamina: '+ (getStaminaTotal().toString());
 	
-	document.getElementById("enBMax").textContent = getManipTotal().toString();
+	document.getElementById("enBMax").textContent = 'Manipulation: '+getManipTotal().toString();
 	
-	document.getElementById("menBMax").textContent = getIQTotal().toString();
+	document.getElementById("menBMax").textContent = 'Intelligence: '+ getIQTotal().toString();
 	
-	document.getElementById("proBMax").textContent = getEUDTotal().toString();
+	document.getElementById("proBMax").textContent = 'Endurance: ' + getEUDTotal().toString();
 }
 
 function resetBoxesB() {
@@ -287,7 +287,7 @@ function resetBoxesB() {
 	document.getElementById("menBAllowed").textContent = "0";
 	proB.selectedIndex = "0";
 	document.getElementById("proBAllowed").textContent = "0";
-	
+	var i;
 	for (i = 1; i <= 4; i++) {
 		physB[i].disabled = false;
 		enB[i].disabled = false;
@@ -690,6 +690,7 @@ function validateAllInput() {
 	var allInputs = document.getElementsByTagName("input");
 	
 	//iterate over the fields
+	var i;
 	for (i = allInputs.length - 1; i >= 0; i--) {
 		//send it to helper function, if one chokes automatic fail
 		if (!validateInput(allInputs[i])) {
@@ -729,9 +730,64 @@ function validateInput(field) {
 			return true;
 		}
 	}
+}
+
+function checkNumbers() {
+
+	var warning = document.getElementById("waitasec");
+	var allInputs = document.getElementsByTagName("input");
+	var submitButton = allInputs[allInputs.length-1]; //should be the submit button.
 	
+	var disable = false;
 	
+	var keys = ['phys', 'en', 'men', 'pro'];
+	var k;
+	for (k = 0; k < 4; k++) {
+		if (!checkAssigns(keys[k])) {
+			disable = true;
+			break;
+		}
+	}
+	disable = disable || checkMaxes();
+	submitButton.disabled = disable;
+	if (disable) {
+		warning.textContent = "Wait a second!\nYou must spend all your points in Attributes and Skills. Else, one or more of your Skills are higher than the indicated attribute!\n Fix that and the generate button will unlock!";
+	}
+	else {
+		warning.textContent = "";
+	}
+}
+
+function checkMaxes() {
+	var stamValue = getStaminaTotal();
+	var manipValue = getManipTotal();
+	var intValue = getIQTotal();
+	var endValue = getEUDTotal();
+	var values = [stamValue, manipValue, intValue, endValue];
+	var keys = ['physical', 'energy', 'mental', 'protection'];
+	var k;
+	for (k = 0; k < 4; k++) {
+		if (values[k] < maxInTree(keys[k])) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function checkAssigns(key) {
+	var attrAssign = parseInt(document.getElementById(key + "ATotal").textContent);
+	var attrMax = parseInt(document.getElementById(key + "AAllowed").textContent);
+	
+	var skillAssign = parseInt(document.getElementById(key + "BTotal").textContent);
+	var skillMax = parseInt(document.getElementById(key + "BAllowed").textContent);
+	
+	var biggerThanZero = skillMax > 0 && attrMax > 0;
+	
+	return ((attrAssign == attrMax) && (skillAssign == skillMax)) && biggerThanZero;
 }
 
 //Automatically update the max value a Skill can be from the tree.
 var writeMaxes = setInterval(writeMaxSkills, 100);
+
+//Automatically ensures the user's numeric input is correct and disallows "Generate" to ensure input is valid.
+var checkNums = setInterval(checkNumbers, 100);
