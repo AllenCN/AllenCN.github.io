@@ -2,14 +2,12 @@ function validateInput() {
 	//get all the input fields
 	var allInputs = document.getElementsByTagName("input");
 	
-	//a regular expression that only matches positive real numbers (+ sign included)
-	var digits = new RegExp('^[+]?(?:\d*[.,])?\d+', 'g');
-	
 	//iterate over the fields
 	for (i = allInputs.length - 1; i >= 0; i--) {
 		//if any of the four text fields have an invalid value, it is an automatic fail.
 		if (allInputs[i].type == "text") {
-			if (!digits.test(allInputs[i].value)) {
+			var tmp = Number(allInputs[i].value)
+			if (isNaN(tmp) || tmp < 0) {
 				return false;
 			}
 		}
