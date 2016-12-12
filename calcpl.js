@@ -97,7 +97,13 @@ function getStatement(sum) {
 	if (sum > 90 && sum <= 100) {
 		return "You are officially on par with the Gods of Destruction, if you're not lying to me.";
 	}
-	if (sum > 100) {
+	if (sum > 100 && sum < 9001.0) {
+		return "STOP LYING TO ME, FACELESS INTERNET USER!!";
+	}
+	if (sum >= 9001.0 && sum < 9002.0) {
+		return "IT'S OVER NINE THOUSAND!";
+	}
+	if (sum >= 9002.0) {
 		return "STOP LYING TO ME, FACELESS INTERNET USER!!";
 	}
 	
