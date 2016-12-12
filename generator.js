@@ -612,7 +612,7 @@ function generateSheet() {
 	}
 	
 	//Build the html manually.
-	var htmlString = "<html><head><title>Your Character</title><link rel=\"stylesheet\" href=\"dbz.css\"></head><body>";
+	var htmlString = "<html><head><title>Your Character</title><link rel=\"stylesheet\" href=\"dbz.css\" /></head><body>";
 	
 	htmlString += "<p>Character Name: " + charName + "</p>";
 	htmlString += "<p>Username: " + userName + "</p>";
