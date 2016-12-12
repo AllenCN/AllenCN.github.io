@@ -1,0 +1,12 @@
+body {
+	background-image: url("img/christmas-bulbs-red-background.png");
+	background-color: #550000;
+	font-family: arial;
+	color: #eeeeee;
+}
+
+p {
+	font-size: 400%;
+	border: 2px solid green;
+}
+

@@ -1,0 +1,328 @@
+<html>
+
+	<head>
+		<title>Beta II Character Generator</title>
+		<link rel="stylesheet" href="dbz.css">
+	</head>
+	
+	<body>
+		<h1>Character Generation</h1>
+		<p>I created this document to help you, the player of the Beta II, create their character more easily. I will try to help you the best I can using the skills I cultivated in college. I am a computer scientist aspiring to be a software developer. I should be able to make something like this to make processes easier and more stream-lined.</p>
+		<p>So, the mission statement is to help you achieve generating a character based on the Beta II using the rules from <a href="https://drive.google.com/file/d/0BzqNmYX2wzXZeC13YWl4d0JhRUk/view?usp=sharing">this ruleset I found long ago</a>, that we are using for our game. The end result will be itself a webpage, but the results should be easily copied down to an excel document/Google Sheets/what-have-you.</p>
+		<p>Once you have done everything, this form will perform any calculations and should output a valid character sheet, so long as you (the user of this page) enter valid information.</p>
+		<p>So, if you're ready, let's begin.</p>
+		<form id="generator" onsubmit="generateSheet()">
+			
+			<h2>Character Basic Information</h2>
+			<p>First, we will start with your character's name, race, and whatnot (cells A1-F4).</p>
+			Character name:
+			<input type="text" name="charname" /><br>
+			Your username (can be the one from the board or your skype id, so long as I can recognize who you are):
+			<input type="text" name="uname" /><br>
+			
+			<h3>Your character's size:</h3>
+			<p>Size refers to the height of your character, with 1 being the smallest and 5 being the tallest.</p>
+			<input type="number" name="size" min="1" max="5" value="3" />
+			
+			<h3>Your character's race:</h3>
+			<p>You can pick from the following races, explained in brief below:</p>
+			<ul>
+				<li>Saiyan: The warrior race of the universe. Though originally believed to have been wiped out by a single man centuries ago, there has been a resurgence recently.</li>
+				<li>Half Saiyan/Mixed Breed: This is a consequence of the full-blood resurgence; even some humans can have partial blood. This is a catch-all (in the menu below as half-saiyan).</li>
+				<li>Earthling: Not only humans like you and me, but hedgehogs such as Sonic fall into this category. Once again, the term "Earthling" is a catch-all.</li>
+				<li>Namekian: The Namekian race is also available with their own benefits.</li>
+				<li>Icer/Arcosian/Changeling/Frieza Race: Self-explanatory, I think; the race Frieza belongs to.</li>
+				<li>Android: The last one, these come in two flavors: full robot and cyborg. Once again, the term "Android" is a catch-all.</li>
+			</ul>
+			<select name="race">
+				<option value="Saiyan">Saiyan</option>
+				<option value="Half Saiyan">Half Saiyan</option>
+				<option value="Earthling">Earthling</option>
+				<option value="Namek">Namekian</option>
+				<option value="Frieza Race">Icer</option>
+				<option value="Android">Android</option>
+			</select>
+			
+			<h3>Your character's gender</h3>
+			<p>Should be self-explanatory, I think.</p>
+			<input type="radio" name="gender" value="male" />Male <br>
+			<input type="radio" name="gender" value="female" />Female <br>
+			<input type="radio" name="gender" value="neither" />Neither/Is a Namekian <br>
+			
+			<h2>Character Attributes</h2>
+			<p>Next up is your character's attributes (cells A6-L8). How this works, is that each tree must be designated one's most important tree (primary), second most important (secondary), third most important (tertiary), and least important (auxiliary). Now, each of these attributes has 1 point already in it. For each tree, you get a certain amount of points to distribute between the trees (primary 4, secondary 3, tertiary 2, auxiliary 1).</p>
+			
+			<p>The table below organizes your attributes. For each point you want to allocate, move the number of the appropriate field. Keep in mind that no attribute can go above 3 at this stage, though this is taken care of on the page itself; you can only allocate 2 points at most to each attribute in the trees.</p>
+			
+			<p>Any errors you need to correct in your assignments will appear directly below this text.</p>
+			
+			<p id="attrErr"></p>
+			
+			<table border ="1">
+				<tr><b>
+					<td>Tree Name</td>
+					<td>Tree Rank</td>
+					<td>Attribute 1</td>
+					<td>Attribute 2</td>
+					<td>Attribute 3</td>
+					<td>Current Total Allocated</td>
+					<td>Max allowed</td>
+					</b>
+				</tr>
+				<tr>
+					<td>Physical</td>
+					<td>
+						<select id="physAOption" onchange="PhysAChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Strength: <input type="number" name="str" id="str" oninput="physAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Dexterity: <input type="number" name="dex" id="dex" oninput="physAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Stamina: <input type="number" name="stam" id="stam" oninput="physAttrChange()" min="0" max="2" value="0" /></td>
+					<td><p id="physATotal">0</p></td>
+					<td><p id="physAAllowed">0</p></td>
+				</tr>
+				<tr>
+					<td>Energy</td>
+					<td>
+						<select id="enAOption" onchange="EnAChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Power: <input type="number" name="pow" id="pow" oninput="enAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Precision: <input type="number" name="pre" id="pre" oninput="enAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Manipulation: <input type="number" name="man" id="man" oninput="enAttrChange()" min="0" max="2" value="0" /></td>
+					<td><p id="enATotal">0</p></td>
+					<td><p id="enAAllowed">0</p></td>
+				</tr>
+				<tr>
+					<td>Mental</td>
+					<td>
+						<select id="menAOption" onchange="MenAChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Perception: <input type="number" name="per" id="per" oninput="menAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Wits: <input type="number" name="wits" id="wits" oninput="menAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Intelligence: <input type="number" name="int" oninput="menAttrChange()" id="int" min="0" max="2" value="0" /></td>
+					<td><p id="menATotal">0</p></td>
+					<td><p id="menAAllowed">0</p></td>				
+				</tr>
+				<tr>
+					<td>Protection</td>
+					<td>
+						<select id="proAOption" onchange="ProAChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Constitution: <input type="number" name="cons" id="cons" oninput="proAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Reflex: <input type="number" name="ref" id="ref" oninput="proAttrChange()" min="0" max="2" value="0" /></td>
+					<td>Endurance: <input type="number" name="end" id="end" oninput="proAttrChange()" min="0" max="2" value="0" /></td>
+					<td><p id="proATotal">0</p></td>
+					<td><p id="proAAllowed">0</p></td>	
+				</tr>
+			</table>
+			
+			<h2>Character Skills</h2>
+			<p>Similar to the above, each character has a set of skills (cells A9-L13) in each tree. For this, you may select different trees to be the primary tree, secondary tree, and so on. At this step, no Skill may exceed 3, though this is taken care of in the code. In addition, no skill may exceed the value of its tree's "master" attribute, which is also indicated in the table below.</p>
+			
+			<p>The table below organizes your skills. For each point you want to allocate, click the correpsonding arrow.</p>
+			
+			<p>Just like above, there will be a field to show you any errors you've made in skills.</p>
+			
+			<p id="skillErr"></p>
+			
+			<table border = "1">
+				<tr><b>
+					<td>Tree Name</td>
+					<td>Tree Rank</td>
+					<td>Skill 1</td>
+					<td>Skill 2</td>
+					<td>Skill 3</td>
+					<td>Skill 4</td>
+					<td>Skill 5</td>
+					<td>Current Total Allocated</td>
+					<td>Max allowed</td>
+					<td>Associated Attribute</td>
+					</b>
+				</tr>
+				<tr>
+					<td>Physical</td>
+					<td>
+						<select id="physBOption" onchange="PhysBChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Acrobatics: <input type="number" name="acro" id="acro" oninput="physSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Athletics: <input type="number" name="ath" id="ath" oninput="physSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Finesse: <input type="number" name="fin" id="fin" oninput="physSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Stealth: <input type="number" name="stlh" id="stlh" oninput="physSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Survival: <input type="number" name="surv" id="surv" oninput="physSkillChange()" min="0" max="3" value="0" /></td>
+					<td><p id="physBTotal">0</p></td>
+					<td><p id="physBAllowed">0</p></td>
+					<td><p id="physBMax"></p></td>
+				</tr>
+				<tr>
+					<td>Energy</td>
+					<td>
+						<select id="enBOption" onchange="EnBChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Accumlation: <input type="number" name="accum" id="accum" oninput="enSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Concealments: <input type="number" name="cnlm" id="cnlm" oninput="enSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Flight: <input type="number" name="flht" id="flht" oninput="enSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Empower: <input type="number" name="empw" id="empw" oninput="enSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Accuracy: <input type="number" name="accr" id="accr" oninput="enSkillChange()" min="0" max="3" value="0" /></td>
+					<td><p id="enBTotal">0</p></td>
+					<td><p id="enBAllowed">0</p></td>
+					<td><p id="enBMax"></p></td>
+				</tr>
+				<tr>
+					<td>Mental</td>
+					<td>
+						<select id="menBOption" onchange="MenBChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Knowledge: <input type="number" name="know" id="know" oninput="menSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Listen: <input type="number" name="lst" id="lst" oninput="menSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Search: <input type="number" name="srch" id="srch" oninput="menSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Sense: <input type="number" name="sns" id="sns" oninput="menSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Spot: <input type="number" name="spot" id="spot" oninput="menSkillChange()" min="0" max="3" value="0" /></td>
+					<td><p id="menBTotal">0</p></td>
+					<td><p id="menBAllowed">0</p></td>
+					<td><p id="menBMax"></p></td>
+				</tr>
+				<tr>
+					<td>Protection</td>
+					<td>
+						<select id="proBOption" onchange="ProBChanged()">
+							<option value="None">N/A</option>
+							<option value="Primary">Primary</option>
+							<option value="Secondary">Secondary</option>
+							<option value="Tertiary">Tertiary</option>
+							<option value="Auxiliary">Auxiliary</option>
+						</select>
+					</td>
+					<td>Defy: <input type="number" name="defy" id="defy" oninput="proSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Barrier: <input type="number" name="brir" id="brir" oninput="proSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Resilience: <input type="number" name="res" id="res" oninput="proSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Threat: <input type="number" name="thrt" id="thrt" oninput="proSkillChange()" min="0" max="3" value="0" /></td>
+					<td>Willpower: <input type="number" name="will" id="will" oninput="proSkillChange()" min="0" max="3" value="0" /></td>
+					<td><p id="proBTotal">0</p></td>
+					<td><p id="proBAllowed">0</p></td>
+					<td><p id="proBMax"></p></td>
+				</tr>
+			</table>
+			
+			<h2>Character Merits</h2>
+			
+			<p>Next up, your character's starting Merit. There will be a lot of checkboxes below these paragraphs. All you must do is check the boxes next to the merit you want. Though you will only be able to select one at this step for free, later on, once you have finished with this form, you will be able to look here as a reference for what you can do.</p>
+			
+			<p>Things to note: counting your free merit, your character can have only as many merits as they have Intelligence + 1, meaning characters at this stage can only have 6 merits at most (2 at minimum). Though, for now, we'll only pick one, to keep things simple for generation.</p>
+			
+			<p>Each merit below is given their name, and basic info on their benefits, limitations, and experience cost.</p>
+			
+			<input type="radio" name="firstmerit" value="Adept" checked /> Adept - Increase one skill's max limit by 2 (to 7). The selected skill must have one dot already and must not already be affected by Adept. Adept can be taken multiple times, but not for the same skill. Cost: 7 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Advantage Fighter" /> Advantage Fighter - Gain +1 Attack dice and +1 damage dice while under Combat Advantage. Can only be purchased once. Cost: 6 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Ambidextrous" /> Ambidextrous - Reduce the negative effect from wielding two weapons by 1. Can only be purchased once. Cost: 5 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Armor Proficiency" /> Armor Proficiency - Reduce any armor's negative effects to your speed and initiative by two (negative effects cannot go below 1). Can only be purchased once. Cost: 5 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Combat Expertise" /> Combat Expertise - Reduce your attack pools by a number of dice each round to increase your defense by the same amount until the end of that round. Your attack pool must be four or larger to take this merit, and you can only take this merit once. Cost: 10 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Cunning Evasion" /> Cunning Evasion - You increase your Devastated Threshold by 10 LP. You must have a Wits Attribute of 3 or higher to take this merit. Can be purchased twice. Cost: 5 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Danger Sense" /> Danger Sense - Reduce the attack modifier Surprised by 1 while under its effects during a Surprise round. Your Perception Attribute must be 2 or higher to take this merit. Can only be purchased once. Cost: 3 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Diehard" /> Diehard - Decrease any Demise Rate rolls you have to beat by 2.  The Demise Rate difficulty cannot go below 6. Your Constitution Attribute must be two or higher to take this attribute. Can be purchased twice. Cost: 5 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Disengage" /> Disengage - Decrease opponent's counter action attack pools by 2. Your Reflex Attribute must be 3 or higher. Can only be purchased once (?). Cost: 8 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Flexible Flanker" /> Flexible Flanker - If you and an ally target the same foe, you gain +1 bonus attack pool die for each ally targeting him (to a maximum of 3 bonus die). You can only take this once. Cost: 7 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Fortitude" /> Fortitude - Life point thresholds are decreased by 10 more than normal. Must have a Constitution attribute of three or higher to take this merit. Can only be purchased once. Cost: 6 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Greater Attribute" /> Greater Attribute - Increase one Attribute's maximum limit by two (to 7). You can take this multiple times, but only once for each given attribute. Cost: 12 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Improved Initiative" /> Improved Initiative - Increase all initiative rolls by two. Must have a Reflex attribute of 2 or higher to take. Can only be taken once. Cost: 5 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Iron Will" /> Iron Will - Success rate for Struggle is reduced by one. Success rate cannot go below six. Can only be taken once. Cost: 8 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Lucky" /> Lucky - You can re-roll any single failed die roll, but only once per combat encounter. Any use outside of combat is up to me. Cost: 5 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Magic Materialization" /> Magic Materialization - Create simple tools, clothing, weapons, and other small items from nothing. No limits other than my say-so and your imagination. Cost: 7 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Martial Prowess" /> Martial Prowess - Pay one less Ki point to make a physical attack than normal; energy attacks cost two more than normal to make in exchange. Your Strength attribute must be 3 or higher to take this. Cost: 12 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Moxie" /> Moxie - Decrease Ki point thresholds by 10. Your Manipulation attribute must be three or higher to take this merit. Can only be taken once. Cost: 6 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Tactician" /> Tactician - When you attack a character who has no defense left (defense is reduced to zero), you gain Power Shot and Deadly Blow attack modifiers. If the target scores any Struggle successes, you reduce that number by 1, to a minimum of 1. Your Intelligence attribute must be 4 or higher to take this. Can only be taken once. Cost: 10 XP.
+			
+			<input type="radio" name="firstmerit" value="Telekinesis" /> Telekinesis - Gain the ability to move things with your mind (within reason). This also lets you use telepathy to communicate with other people over a reasonable distance (likely based on Intelligence). Your Intelligence attribute must be 3 or higher to take this. Can only be taken once. Cost: 8 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Two-Weapon Fighting" disabled /> Two-Weapon Fighting - Reduce the negative from wielding two weapons by 1, and increase the damage value gained by wielding your weapon by 1. Must have a Dexterity attribute of 3 or higher and already have the Ambidextrous Merit to take this merit. Cost: 6 XP.
+			
+			<input type="radio" name="firstmerit" value="Rapid Blitz" /> Rapid Blitz - Increase the effects of Power Shot by two and Deadly Blow by one while using the Blitz action. Cost: 10 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Steadfast Determination" /> Steadfast Determination - Reduce Steadfast success rate by one, to a minimum of six. Can be taken twice. Cost: 6 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Vigor" /> Vigor - Increase the amount of Ki points gained through the calculation by two. In other words, taking this lets you edit the formula in cell C37 of the sheet. When you generate the sheet, the new formula will be given to you on the sheet next to this Merit. This merit can be taken up to three times. Cost: 10 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Vitality" /> Vitality - Increase the amount of Life Points gained through the calculation by two. In other words, taking this lets you edit the formula in cell C34 of the sheet. When you generate the sheet, the new formula will be given to you on the sheet next to this Merit. This merit can be taken up to three times. Cost: 10 XP. <br>
+			
+			<input type="radio" name="firstmerit" value="Zeal" /> Zeal - Pay one less Ki point to make an energy attack than normal. Physical attack cost goes up by 2 Ki points in exchange. Your Power attribute must be 3 or higher to take this merit. Cost: 12 XP. <br>
+			
+			<p>Once again, keep in mind this is your character's <b>first</b> Merit, and it is free. The cost is listed here as a reference. Also note Two-Weapon Fighting is disabled here. Its inclusion is only as a reference, since you will not be able to select it at this point.</p>
+			
+			<h2>Final Steps</h2>
+			
+			<p>So having finally finished all this, you should be able to click the "Generate" button below, and this webpage should handle most of the grunt work. At the very least, the hardest part is done now. After generating your character's sheet there will be some extra steps I felt were best done outside of this application. These steps are listed below.</p>
+			
+			<ol type="1">
+				<li><b>Your character's first Signature Attack:</b> Initially, I did want to touch on this process here, but as I began writing it out, I quickly realized it would be a tedious process of questionable worth. So, once you're done with everything on this form, we'll simply have to work that out. The main reason I decided to leave it up to manual selection was because I'd rather a new player talk with someone about their signature moves as they make them. There may be a tool in the future to make calculating the cost of signature moves easier, but as it is now, I believe going up through the first merit is fine. For more info on this particular process, <a href="https://drive.google.com/file/d/0BzqNmYX2wzXZeC13YWl4d0JhRUk/view?usp=sharing">check pages 52-59 of the guidebook for more info.</a></li>
+				<li><b>Z-Soul:</b> Your character's concept or background. There's not much else to this other than, as your character's creator, have fun with it, and talk it out with me. It's what defines your character above all else. I'd say, look at Xenoverse for inspiration.</li>
+				<li><b>Racial traits:</b> These can be added in after the character sheet is generated and put on Google Sheets. I felt these were better left to post-generation, since most racial bonuses don't matter too much to creation.</li>
+				<li><b>Post-generation experience points:</b> Once generation is complete, new players gain a certain amount of XP to upgrade their characters, like purchasing new Merits or making another signature attack, or even just adding to their attributes pool. This step and the last could probably be done with this webpage, but most of it's real straightforward.</li>
+			</ol>
+			
+			<p>So, with the above in mind, it's safe to assume you're done, right? So, looking over the information above, are you happy with the way the information is presented? Are the attributes above showing any errors? If everything checks out, click the Generate button below and let's get to work finishing this up!</p>
+			<input type="submit" value="Generate" />
+		</form>
+		
+		<script src="generator.js"></script>
+		<noscript><h1>You must have javascript enabled to use this tool!</h1></noscript>
+	</body>
+
+</html>

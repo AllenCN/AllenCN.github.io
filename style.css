@@ -1,0 +1,18 @@
+body {
+	background-color: #002200;
+	font-family: arial;
+	font-size: 100%;
+	color: #dddddd;
+}
+
+li {
+	border: 1px solid white;
+	padding: 15px;
+}
+
+img {
+	display: block;
+	margin: auto;
+	width: 50%;
+}
+
