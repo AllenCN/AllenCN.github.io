@@ -1,0 +1,108 @@
+<html>
+
+	<head>
+		<title>Beta II Signature Technique Generator</title>
+		<link rel="stylesheet" href="dbz.css" />
+	</head>
+	
+	<body>
+		<h1>Signature Technique Generator</h1>
+		<p>In the same vein as the character generator, this webpage is a tool meant to help you create your character's signature attack. What is a Signature Attack? Well, under the system I discovered, a Signature Attack is something like Goku's Kamehameha or Vegeta's Final Flash, or Gohan's Masenko, etc. So, this tool is to help you move that process along.</p>
+		
+		<p>A character can have a number of Signature Techniques equal to their Intelligence Attribute. Unlike with Merits, the first, free Signature technique a character gets at creation time counts towards that limit. As previously stated on the creation form and this one, the first technique a character gets is at creation time, and it is free; the only stipulation is that you get 10 points, period, to spend on that technique and that technique alone.</p>
+		
+		<p>Subsequent techniques are created using 10 XP as the base cost, and any bells and whistles you add to the technique will add to that as the technique develops. So, without further ado, let's get you started.</p>
+		
+		<form id="techgen" onsubmit="processInput(); return false;">
+
+			<h2>Your technique's name</h2>
+			<p>Like with anything else, your technique should have a name. Enter it into the text field below.</p>
+			<input type="text" id="techName" name="techName" />
+			
+			<h2>Is this your first tech?</h2>
+			<p>Please indicate below whether or not this is your first signature tech.</p>
+			<input type="radio" name="isFirst" class="firstTech" value="Yes" checked /> Yes, this is my first technique. <br>
+			<input type="radio" name="isFirst" class="firstTech" value="No"/> No, this is not my first technique. <br>
+			
+			<h2>Your technique's type</h2>
+			<p>Signature attacks come in three flavors. Two of these flavors are offensive in nature, and the third is defensive in nature. Offensive abilities can be physical attacks or energy attacks. Different perks (explained slightly later) can only be taken for one or the other, which will be noted next to the perk in question. Defensive signature moves must purchase the Aura advantage. Defensive techniques can be activated on the creator's turn, but it requires spending an action.</p>
+			
+			<p>All signature techniques are subject to the same overall rules. Physical Signature Techniques simply require three Ki points to perform and have an increased damage value of 2. Energy Signature Techniques are a bit more complex than that.</p>
+			
+			<p>Anyway, select one of the types below.</p>
+			<input type="radio" name="techtype" class="techType" value="Physical" onclick="typeChanged(this);" checked /> Physical <br>
+			<input type="radio" name="techtype" id="enType"  class="techType" value="Energy" onclick="typeChanged(this);" /> Energy <br>
+			<input type="radio" name="techtype" class="techType" value="Defensive" onclick="typeChanged(this);" /> Defensive <br>
+			
+			<h2>Select your character's Energy Attack Type</h2>
+			<p>If your character's technique is an energy attack, please enter your Intelligence Attribute below. Otherwise, you can skip this section entirely.</p>
+			<b>Your Intelligence Attribute Value: </b> <input type="number" id="int" name="int" class="energyOnly" min="1" max="5" value="1" />
+			
+			<p>The Intelligence Attribute will affect the selection box below. Certain energy attacks will be "walled off" from you until your intelligence attribute is high enough. Please, don't lie to the form. We are currently on the honor system with this form.</p>
+			
+			<select id="energyType" name="energyType" class="energyOnly" onchange="updateExplain(this);">
+				<option value="sphere" selected>Energy Sphere</option>
+				<option value="blast">Ki Blast</option>
+				<option value="explosion">Energy Explosion</option>
+				<option value="beam">Energy Beam</option>
+			</select>
+			
+			<div id="explanation">
+				
+			</div>
+			
+			<h2>Technique Advantage</h2>
+			
+			<p>Technique Advantages are things you purchase with your XP to make your attack even better. They add cost to your signature technique in exchange for powering it up further. Something to note from this section is the "Dynamic" advantage at the very bottom. If you select this, you will have to talk it out with me so I can tell you what is what before you put in the sheet.</p>
+			
+			<p>Below is a list of Advantages, and their checkboxes. Some of them have multiple checkboxes, meaning the perk can be taken up to that many times. At the very bottom is a "Dynamic" option, which has a text field next to it where you can give me a list for me to evaluate/talk out with you. All that aside, here we go.</p>
+			
+			<h3>List of Advantages</h3>
+			
+			<input type="checkbox" name="advantage[]" class="Accurate" value="5" onchange="checkboxChecked(this);" /> <input type="checkbox" name="advantage[]" class="Accurate" value="7" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Accurate" value="9" onchange="checkboxChecked(this);" disabled /> Accurate - Increased ability to strike a target. Gain one extra dice to the appropriate attack pool. Cost - 5 XP for rank 1, 12 XP for rank 2, 21 XP for rank 3. Benefits - +1 die to appropriate attack pool at rank 1, +2 at rank 2, +4 at rank 3. <br>
+			<input type="checkbox" name="advantage[]" class="Aura" value="4" onchange="checkboxChecked(this);" disabled /> Aura - Can be combined with Bleeding and a few others below. Automatically selected if you choose to make a defensive signature. Cost - 4 XP. Adds Sustain Cost to signature move. <br>
+			<input type="checkbox" name="advantage[]" class="Bleeding" value="5" onchange="checkboxChecked(this);"  /> <input type="checkbox" name="advantage[]" class="Bleeding" value="7" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Bleeding" value="9" onchange="checkboxChecked(this);" disabled /> Bleeding - An attack that continues to damage the target after it strikes successfully--whether it burns them, poisons them, or even causes blood loss. Causes three life point damage to the target per round until the effect ends. Damage over time (DOT) duration can be increased from its initial 1 round up to 5, but it costs 4 XP per extra round to increase. Base Cost - 5 XP for rank 1, 12 XP for rank 2, 21 XP for rank 3. Benefits - 3 LP damage to target per round until effect ends at rank 1; 5 LP damage/round at rank 2; 7 LP damage/round at rank 3. <br>
+			<input type="checkbox" name="advantage[]" class="Damaging" value="6" onchange="checkboxChecked(this);" /> <input type="checkbox" name="advantage[]" class="Damaging" value="7" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Damaging" value="8" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Damaging" value="9" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Damaging" value="10" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Damaging" value="11" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Damaging" value="12" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Damaging" value="13" onchange="checkboxChecked(this);" disabled /> Damaging - Increases the Damage Value of a technique by two for Rank 1, and then by one more for each rank after that (Rank 2 = +3 to Damage Value; Rank 3 = +4, and so on for a total of +9 at Rank 8). Cost - 6 XP for Rank 1, 13 XP Rank 2, 21 XP for Rank 3, 29 XP for Rank 4, 38 XP for Rank 5, 48 for Rank 6, 59 for Rank 7, 71 for Rank 8. <br>
+			<input type="checkbox" name="advantage[]" class="Homing" value="12" onchange="checkboxChecked(this);" /> Homing - Cannot be combined with area of effect attacks. If a character misses with their technique, they can attempt to attack the target with the same attack and same dice pool, however, the dice pool is halved and scores no bonus dice. Cost - 12 XP <br>
+			<input type="checkbox" name="advantage[]" class="Penetration" value="7" onchange="checkboxChecked(this);" /> <input type="checkbox" name="advantage[]" class="Penetration" value="7" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="Penetration" value="7" onchange="checkboxChecked(this);" disabled /> Penetration - Reduces effectiveness of target's Resilience, Barrier, and Armor. Each Rank of Penetration allows one stopped success to inflict half damage to the target as opposed to zero. Cost - 4 XP times the Rank. For example, ticking 2 of the three checkboxes next to this would give you a cost of 8 XP. <br>
+			<input type="checkbox" name="advantage[]" class="StatBoosting" value="9" onchange="checkboxChecked(this);" /> <input type="checkbox" name="advantage[]" class="StatBoosting" value="9" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="advantage[]" class="StatBoosting" value="9" onchange="checkboxChecked(this);" disabled /> Stat Boosting - This advantage allows you to increase a specific stat temporarily. Each tick represents one stat you change (tell me what it is post-creation). Mental stats can not be raised using this Advantage. You must also succeed at a Fortitude Check (Constitution + Willpower)-- scoring enough successes means your attribute is increased, failure means you take 8 damage directly to your LP times the number of unsuccessful dice you rolled. In addition, maintaining the boost requires you succeed at the same Fortitude Check for as long as the boost remains active. <br>
+			<input type="checkbox" name="advantage[]" class="Dynamic" value="0" onchange="checkboxChecked(this);" /> Other - List any Dynamic Advantage names in this field, and be prepared to talk to me about what each does. <input type="text" id="listAdv" name="listAdv" disabled /> <br>
+			
+			<h2>Technique Disadvantage</h2>
+			
+			<p>In the opposite vein of technique advantages, we have technique disadvantages. These weaken your attack or limit it in some way. However, in exchange, these increase the number of points you have to spend.</p>
+			
+			<p>Like above, there's a dynamic disadvantage option as well. An example of such a thing would be Lexon's "Shade Seal", which mandates that Lexon's target must have a Shade Seal before the technique can be used.</p>
+			
+			<p>Below is a list of disadvantages and their checkboxes. Check the ones you want.</p>
+			
+			<h3>Disadvantage List</h3>
+			
+			<input type="checkbox" name="disadvantage[]" class="Backblast" value="-4" onchange="checkboxChecked(this);" /> <input type="checkbox" name="disadvantage[]" class="Backblast" value="-4" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="Backblast" value="-4" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="Backblast" value="-4" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="Backblast" value="-4" onchange="checkboxChecked(this);" disabled /> Backblast - This attack has significant recoil. Backblast inflicts two damage directly to the user for each successful dice rolled during the damage step; this damage is increased by 1 for each subsequent rank for a total of 6 direct damage at Rank 5. Refund - 4 XP per rank; Backblast Rank 3 would give you 12 XP back. <br>
+			<input type="checkbox" name="disadvantage[]" class="Inaccurate" value="-3" onchange="checkboxChecked(this);" /> <input type="checkbox" name="disadvantage[]" class="Inaccurate" value="-3" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="Inaccurate" value="-3" onchange="checkboxChecked(this);" disabled /> Inaccurate - Decreases the attack pool by one for each rather than increasing it, with -3 to the appropriate attack pool by Rank 3. Refund - 3 XP per rank; Inaccurate Rank 3 would give you 9 XP back. <br>
+			<input type="checkbox" name="disadvantage[]" class="LimitedShot" value="-4" onchange="checkboxChecked(this);" /> <input type="checkbox" name="disadvantage[]" class="LimitedShot" value="-4" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="LimitedShot" value="-4" onchange="checkboxChecked(this);" disabled /> Limited Shot - Taking this means your attack can only be fired a certain amount of times per battle. Limited Shot Rank 1 means you can only use it three times; Rank 2 means you can only use it twice; Rank 3 means you can only use it once. Each Rank in Limited Shot refunds you 4 XP. <br>
+			<input type="checkbox" name="disadvantage[]" class="LowPenetration" value="-3" onchange="checkboxChecked(this);" /> <input type="checkbox" name="disadvantage[]" class="LowPenetration" value="-3" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="LowPenetration" value="-3" onchange="checkboxChecked(this);" disabled /> <input type="checkbox" name="disadvantage[]" class="LowPenetration" value="-3" onchange="checkboxChecked(this);" disabled /> Low Penetration - Decreases Damage Value of a technique by two for the first rank and by one for future ranks, meaning this can reduce Damage Values by up to 5. Refund - 3 XP per rank, meaning Rank 2 refunds 6 XP. <br>
+			<input type="checkbox" name="disadvantage[]" class="SelfDestruct" value="-10" onchange="checkboxChecked(this);" /> Self-Destruct - This disadvantage will cause your technique to reduce your LP to zero and you will need to make a Demise Check to avoid being killed outright by this attack. Refund - 10 XP <br>
+			<input type="checkbox" name="disadvantage[]" class="ShortRange" value="-3" onchange="checkboxChecked(this);" disabled /> Short Range - Reduces the range of your energy attack to melee range. Increases enemy combat modifiers by one if the attack is used. Refund - 3 XP <br>
+			<input type="checkbox" name="disadvantage[]" class="StatDrain" value="-6" onchange="checkboxChecked(this);" /> <input type="checkbox" name="disadvantage[]" class="StatDrain" value="-6" onchange="checkboxChecked(this);"  disabled /> <input type="checkbox" name="disadvantage[]" class="StatDrain" value="-6" onchange="checkboxChecked(this);"  disabled />  Stat Drain - Drains specific stats temporarily; cannot drain mental stats. Also, stats cannot be drained below 1, but drain by one for each rank the technique has of this. They must also beat the Fortitude check described under Stat Boosting with the same stakes. Each time this is taken, you get a refund of 6 XP. <br>
+			<input type="checkbox" name="disadvantage[]" class="VitalityDrain" value="-5" onchange="checkboxChecked(this);" /> <input type="checkbox" name="disadvantage[]" class="VitalityDrain" value="-5" onchange="checkboxChecked(this);" disabled /> Vitality Drain - With this, you suffer loss of Life Points or Ki Points when the technique is fired (indicate which it is). Taken once, your character will lose 6 extra Ki points, not counted towards Influx limit; or take 4 damage directly to Life points; taken twice, the negative effects increase to 9 Ki points and 7 direct damage to LP. Each time this is taken, you get a refund of 5 XP. <br>
+			<input type="checkbox" name="disadvantage[]" class="Dynamic" value="0" onchange="checkboxChecked(this);" /> Other - List any Dynamic Disdvantage names in this field, and be prepared to talk to me about what each does. <input type="text" id="listDis" name="listDis" disabled /> <br>
+			
+			<h2>Just about done...</h2>
+			<p>All you need to do now, is click that button down there and you should be done! </p>
+			<input type="submit" id="sub" value="View Your Attack!" />
+		</form>
+		<p>Your completed attack will appear below this text. If you have any dynamic advantages or disadvantages listed below after you click "View Your Attack!", you still have some work to do. In addition, if your technique has Bleeding and you want to increase its DOT attribute, talk to me as well for a final cost estimate. Otherwise, you're done.</p>
+		<div id="sigtech">
+			<p id="techname" class="techInfo"></p>
+			<p id="techXPcost" class="techInfo"></p>
+			<p id="techKicost" class="techInfo"></p>
+			<p id="techSustaincost" class="techInfo"></p>
+			<p id="advList" class="techInfo"></p>
+			<p id="disadvList" class="techInfo"></p>
+		</div>
+		<script src="sigtechgen.js"></script>
+		<noscript>You must have Javascript enabled in your browser to use this tool!</noscript>
+	</body>
+	
+</html>

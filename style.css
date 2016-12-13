@@ -2,7 +2,7 @@ body {
 	background-color: #002200;
 	font-family: arial;
 	font-size: 100%;
-	color: #dddddd;
+	color: #ffffff;
 }
 
 li {
@@ -14,5 +14,9 @@ img {
 	display: block;
 	margin: auto;
 	width: 50%;
+}
+
+a {
+	color: #00ffff;
 }
 
