@@ -1,0 +1,16 @@
+body {
+	background-image: url("img/ygobg.jpg");
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-color: #222222;
+	font-family: arial;
+	color: #ffffff;
+	text-shadow: 0 0 0.5px #000000, 0.5px 0.5px 0.5px #000000,
+				-0.5px -0.5px 0.5px #000000, 0.5px -0.5px 0.5px #000000,
+				-0.5px 0.5px 0.5px #000000;
+}
+
+a {
+	color: #00ffff;
+}
