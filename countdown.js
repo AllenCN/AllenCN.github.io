@@ -2,6 +2,13 @@
 //December 7, 2016
 //Countdown to Christmas timer for psuedo-website thing
 //Counts down to Christmas on the given year.
+//Count resets on January 1 of the following year.
+
+//accuracy to the millisecond
+var myCount = setInterval(function(){ getString() }, 1);
+
+window.onload = function() {changeTitle(false)};
+
 
 //padWithZeroes is a helper function that 
 //pads a number with leading zeroes
@@ -17,6 +24,7 @@ function getString() {
 	//get current time
 	var now = new Date();
 	var timerField = document.getElementById("timer");
+	
 	//get this year's christmas, months are zero-based
 	var target = new Date(now.getFullYear(), 11, 25);
 	
@@ -25,7 +33,9 @@ function getString() {
 	
 	//if the difference is 0, return the appropriate string
 	if (diff <= 0) {
-		timerField.innerHTML = "Merry Christmas!";
+		timerField.textContent = "Merry Christmas!";
+		changeTitle(true);
+		clearInterval(myCount);
 	}
 	else {
 		//divide up the section of time
@@ -43,9 +53,21 @@ function getString() {
 		var strDays = "" + days;
 		
 		//update the countdown
-		timerField.innerHTML = strDays + " " + strHr + ":" + strMin + ":" + strSec + "." + strMs;
+		timerField.textContent = strDays + " " + strHr + ":" + strMin + ":" + strSec + "." + strMs;
 	}
 }
 
-//accuracy to the millisecond
-var myCount = setInterval(getString, 1);
+function changeTitle(isAfterXmas) {
+	var now = new Date();
+	var thisYear = now.getFullYear();
+	var field = document.getElementById("titleHeader");
+	
+	if (isAfterXmas) {
+		field.textContent = "Wait until next year!";
+	}
+	else {
+		field.textContent = "How long until Christmas " + thisYear.toString() + "?";
+	}
+	
+}
+
