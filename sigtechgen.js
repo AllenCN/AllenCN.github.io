@@ -239,6 +239,14 @@ function getNumberEnabled(cName) {
 
 function processInput() {
 	
+	//preserve the relevant variables from before this function runs.
+	//relevant variables = [firstLimit, xpCost, kiCost, sustainCost];
+	var relevantVars = new Object();
+	relevantVars['firstLimit'] = firstLimit;
+	relevantVars['xpCost'] = xpCost;
+	relevantVars['kiCost'] = kiCost;
+	relevantVars['sustainCost'] = sustainCost;
+	
 	//get all the fields from the form.
 	var data = new FormData(document.getElementById("techgen"));
 	
@@ -325,6 +333,13 @@ function processInput() {
 	techSustain.textContent = "Sustain Cost: " + sustainCost.toString();
 	advLst.textContent = "List of dynamic advantages: " + data.get("listAdv");
 	disLst.textContent = "List of dynamic disadvantages: " + data.get("listDis");
+	
+	//with all of that done, restore the original values.
+	firstLimit = relevantVars['firstLimit'];
+	xpCost = relevantVars['xpCost'];
+	kiCost = relevantVars['kiCost'];
+	sustainCost = relevantVars['sustainCost'];
+	
 
 }
 
