@@ -706,11 +706,11 @@ function validateInput(field) {
 	//numbers only
 	var numRegExp = new RegExp('^[0-9]+$', 'g');
 	
-	//letters only 
-	var charRegExp = new RegExp('^[a-zA-Z]+$', 'g');
+	//letters, spaces, dashes only (what you'd expect in a name) 
+	var charRegExp = new RegExp('^[a-zA-Z -]+$', 'g');
 	
-	//numbers and letters only.
-	var uidRegExp = new RegExp('^[0-9a-zA-Z]+$', 'g');
+	//numbers, letters, spaces, dashes, underscores (what you'd expect in an online screen name)
+	var uidRegExp = new RegExp('^[0-9a-zA-Z -_]+$', 'g');
 	
 	//check using the appropriate field
 	if (field.tagName == "INPUT") {
