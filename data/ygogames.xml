@@ -1,0 +1,20 @@
+<ygowebapp>
+	
+	<game id="nameofgame" startLP="8000" maxPlayers="2" penalty="off" status="closed">
+		<player>
+			<name>John Doe</name>
+			<life>4550</life>
+			<wins>1</wins>
+			<losses>1</losses>
+			<draw>1</draw>
+		</player>
+		<player>
+			<name>Jane Doe</name>
+			<life>3000</life>
+			<wins>1</wins>
+			<losses>1</losses>
+			<draw>1</draw>
+		</player>
+	</game>
+	
+</ygowebapp>
