@@ -10,7 +10,7 @@ window.onload = function () {
 		}
 	}
 		
-	xmlHTTP.open('GET', 'https://www.dropbox.com/s/wkn99jxk1gpjgzi/ygogames.xml?dl=0', true);
+	xmlHTTP.open('GET', 'https://drive.google.com/file/d/0B0lPF1YstiwyYXlnVWhyanJiUUU/view?usp=sharing', true);
 	xmlHTTP.send();
 }
 
@@ -46,7 +46,7 @@ function processInput() {
 
 function send(xmlDoc) {
 	var xmlSendRequest = new XMLHttpRequest();
-	xmlSendRequest.open('POST', 'https://www.dropbox.com/s/wkn99jxk1gpjgzi/ygogames.xml?dl=0', true);
+	xmlSendRequest.open('POST', 'https://drive.google.com/file/d/0B0lPF1YstiwyYXlnVWhyanJiUUU/view?usp=sharing', true);
 	xmlSendRequest.send("file_contents="+xmlDoc);
 	
 	xmlSendRequest.onreadystatechange = function () {
