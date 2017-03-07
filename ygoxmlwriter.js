@@ -47,11 +47,11 @@ function processInput() {
 function send(xmlDoc) {
 	var xmlSendRequest = new XMLHttpRequest();
 	xmlSendRequest.open('POST', 'https://drive.google.com/file/d/0B0lPF1YstiwyYXlnVWhyanJiUUU/view?usp=sharing', true);
-	xmlSendRequest.send("file_contents="+xmlDoc);
+	
 	
 	xmlSendRequest.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
-			// Successful???
+			this.send("file_contents="+xmlDoc);
 		}
 	}
 }
