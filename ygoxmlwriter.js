@@ -50,6 +50,8 @@ function send(xmlDoc) {
 	xmlSendRequest.send("file_contents="+xmlDoc);
 	
 	xmlSendRequest.onreadystatechange = function () {
-		if (xmlSendRequest.)
+		if (this.readyState == 4 && this.status == 200) {
+			// Successful???
+		}
 	}
 }
