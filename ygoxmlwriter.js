@@ -40,7 +40,7 @@ function processInput() {
 	newNode.setAttribute("penalty", penalty);
 	newNode.setAttribute("status", "waiting");
 	
-	rootElem.appendChild(newNode);
+	xmlDoc = xmlDoc.documentElement.appendChild(newNode);
 	send(xmlDoc);
 }
 
