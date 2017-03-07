@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+	<head>
+		<title>Yu-Gi-Oh! Dynamic Web Application - Room Creator</title>
+		<link rel="stylesheet" href="ygo.css" />
+		<!-- Credit to realfavicongenerator.net for the below -->
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+		<link rel="manifest" href="manifest.json" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="theme-color" content="#ffffff" />
+	</head>
+	
+	<body>
+		<p>Because I can't leave the subject alone for very long without contemplating how I can make it even better for real life consumption,
+		here is another take on Yu-Gi-Oh LP calculators from me. So, this time, I'm aiming to make a webapp for this. The rules are simple.</p>
+		
+		<ol>
+			<li>Below, fill out the required forms. Each of them are important in their own way, though I imagine I'll need a stronger backend for this than just plain JavaScript...</li>
+			<li>When you click "Start the Game Room", you'll be taken to a page that will dynamically show you not only the remaining LP of the players and yourself, but you'll only be able to modify your own points. The remainder of the LPs will be shown, but you cannot edit them. The values below should update in real time.</li>
+		</ol>
+		
+		<p>Ideally, this should work as long as you have a unique name for your room. I have no idea how this will work in real-time, but it's based on an application I found elsewhere.</p>
+		<p>So, below, you'll see a form. Go ahead and let's get to work.</p>
+		
+		<form id="gameinfo" onsubmit="processInput(); return false;">
+			<p><b>Room name:</b></p>
+				<input type="text" name="roomName" />
+			<p><b>Max number of players allowed: </b></p>
+				<input type="number" name="maxPlayers" value="2" min="2" max="8" />
+			<p><b>Starting LP: </b></p>
+				<input type="number" name="startLP" value="8000" min="2000" max="16000" step="2000" />
+				
+			<p><b>Enable "Intrusion Penalty?"</b></p>
+				<input type="checkbox" name="penalty" id="penalty" checked>
+			<p>If one of your players is late, they start with half of whatever your above starting LP is, if this option is enabled.</p>
+			
+			<p>Everything look good? If your room name is not unique, we will return an error. Otherwise it's time to move on to the join page.</p>
+			
+			<input type="submit" />	
+		</form>
+		<script src="ygoxmlwriter.js"></script>
+		<noscript>You must have Javascript enabled in your browser to use this tool!</noscript>
+	</body>
+</html>
