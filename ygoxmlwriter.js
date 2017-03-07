@@ -10,7 +10,7 @@ window.onload = function () {
 		}
 	}
 		
-	xmlHTTP.open('GET', 'data/ygogames.xml', true);
+	xmlHTTP.open('GET', 'https://www.dropbox.com/s/wkn99jxk1gpjgzi/ygogames.xml?dl=0', true);
 	xmlHTTP.send();
 }
 
