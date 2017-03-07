@@ -41,5 +41,15 @@ function processInput() {
 	newNode.setAttribute("status", "waiting");
 	
 	rootElem.appendChild(newNode);
+	send(xmlDoc);
+}
+
+function send(xmlDoc) {
+	var xmlSendRequest = new XMLHttpRequest();
+	xmlSendRequest.open('POST', 'https://www.dropbox.com/s/wkn99jxk1gpjgzi/ygogames.xml?dl=0');
+	xmlSendRequest.send("file_contents="+xmlDoc);
 	
+	xmlSendRequest.onreadystatechange = function () {
+		if (xmlSendRequest.)
+	}
 }
